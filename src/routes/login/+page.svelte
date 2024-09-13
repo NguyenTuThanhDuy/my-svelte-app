@@ -1,7 +1,20 @@
 <script lang="ts">
 	import Login from 'svelte-material-icons/Login.svelte';
-	let username = '';
-	let password = '';
+	import axiosInstance from '../../services/axios';
+
+	const handleSubmit = async (e: SubmitEvent) => {
+		e.preventDefault();
+		const formData = new FormData(e.target as HTMLFormElement);
+		try {
+			const response = await axiosInstance.post('http://localhost:8000/api/v1/login', {
+				email: formData.get('email'),
+				password: formData.get('password')
+			});
+			console.log(response);
+		} catch {
+			console.error('Error');
+		}
+	};
 </script>
 
 <section class="bg-gray-50 dark:bg-gray-900">
@@ -19,7 +32,12 @@
 				>
 					Sign in to your account
 				</h1>
-				<form class="space-y-4 md:space-y-6" action="#">
+				<form
+					class="space-y-4 md:space-y-6"
+					action="#"
+					name="loginForm"
+					on:submit|preventDefault={handleSubmit}
+				>
 					<div>
 						<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
 							>Your email</label
