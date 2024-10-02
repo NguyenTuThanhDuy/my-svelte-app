@@ -1,22 +1,26 @@
 <script lang="ts">
 	import Login from 'svelte-material-icons/Login.svelte';
 	import axiosInstance from '../../services/axios';
+	import useRoutes from '../../hooks/routes';
 
-	let isSubmit = false;
-
+	const routes = useRoutes();
+	const url = routes.getURL('LOGIN_URL');
 	const handleSubmit = async (e: SubmitEvent) => {
 		e.preventDefault();
 		const formData = new FormData(e.target as HTMLFormElement);
 		try {
-			isSubmit = true;
-			const response = await axiosInstance.post(`${import.meta.env.VITE_API_URL}login`, {
+			const response = await axiosInstance.post(url, {
 				username: formData.get('email'),
 				password: formData.get('password')
 			});
-			console.log(response);
+			if (response.status === 200) {
+				window.location.href = '/';
+			} else {
+				window.location.href = '/login';
+			}
 		} catch {
 			console.error('Error');
-			isSubmit = false;
+			window.alert('Failed to login');
 		}
 	};
 </script>
@@ -25,7 +29,7 @@
 	<div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
 		<a href="/" class="mb-6 flex items-center text-2xl font-semibold text-gray-900 dark:text-white">
 			<Login />
-			SnowWhite
+			Login
 		</a>
 		<div
 			class="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
@@ -93,7 +97,7 @@
 					<button
 						type="submit"
 						class="w-full rounded-lg bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-						disabled={isSubmit}>Sign in</button
+						>Sign in</button
 					>
 					<p class="text-sm font-light text-gray-500 dark:text-gray-400">
 						Don’t have an account yet? <a

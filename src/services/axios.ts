@@ -1,5 +1,6 @@
 // axiosInstance.js or api.js
 import axios from 'axios';
+
 const axiosInstance = axios.create({
 	baseURL: import.meta.env.VITE_API_URL, // Replace with your API base URL
 	withCredentials: true,
@@ -31,9 +32,7 @@ axiosInstance.interceptors.response.use(
 			switch (error.response.status) {
 				case 401:
 					// Handle unauthorized error
-					console.log('Unauthorized, logging out...');
-					localStorage.removeItem('authToken');
-					window.location.href = '/';
+					window.location.href = '/login';
 					break;
 				case 404:
 					console.log('Resource not found');

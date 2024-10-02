@@ -1,5 +1,25 @@
 <script lang="ts">
 	import Login from 'svelte-material-icons/Login.svelte';
+	import axiosInstance from '../../services/axios';
+
+	const handleSubmit = async (e: SubmitEvent) => {
+		e.preventDefault();
+		const formData = new FormData(e.target as HTMLFormElement);
+		try {
+			let data = {
+				username: formData.get('email'),
+				password: formData.get('password'),
+				confirmPassword: formData.get('confirmPassword'),
+				isAccepted: formData.get('userAcceptance')
+			};
+			console.log(data);
+			const response = await axiosInstance.post(`${import.meta.env.VITE_API_URL}signup`, data);
+			window.alert('Signup successfully');
+		} catch {
+			console.error('Error');
+			window.alert('Failed to signup');
+		}
+	};
 </script>
 
 <section class="bg-gray-50 dark:bg-gray-900">
@@ -17,7 +37,12 @@
 				>
 					Sign up your account
 				</h1>
-				<form class="space-y-4 md:space-y-6" action="#" name="signUpForm">
+				<form
+					class="space-y-4 md:space-y-6"
+					action="#"
+					name="signUpForm"
+					on:submit|preventDefault={handleSubmit}
+				>
 					<div>
 						<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
 							>Your email</label
@@ -64,15 +89,16 @@
 						<div class="flex items-start">
 							<div class="flex h-5 items-center">
 								<input
-									id="remember"
-									aria-describedby="remember"
+									id="userAcceptance"
+									name="userAcceptance"
+									aria-describedby="userAcceptance"
 									type="checkbox"
 									class="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
-									required={false}
+									required={true}
 								/>
 							</div>
 							<div class="ml-3 text-sm">
-								<label for="remember" class="text-gray-500 dark:text-gray-300"
+								<label for="userAcceptance" class="text-gray-500 dark:text-gray-300"
 									>I accept the Terms and Conditions</label
 								>
 							</div>
@@ -85,7 +111,7 @@
 					>
 					<div class="text-sm font-medium text-gray-500 dark:text-gray-300">
 						Already have an account? <a
-							href="/"
+							href="/login"
 							class="font-medium text-primary-600 hover:underline dark:text-primary-500"
 							>Login here</a
 						>
