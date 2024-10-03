@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { AppBar, Avatar } from '@skeletonlabs/skeleton';
+	import { AppBar, Avatar, LightSwitch } from '@skeletonlabs/skeleton';
 
 	$: routeId = $page.route.id;
 
@@ -26,7 +26,12 @@
 	];
 </script>
 
-<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
+<AppBar
+	gridColumns="grid-cols-3"
+	slotDefault="place-self-center"
+	slotTrail="place-content-end"
+	class="mb-2"
+>
 	<svelte:fragment slot="lead">
 		<h1 class="h1">
 			<span
@@ -36,15 +41,18 @@
 		</h1>
 	</svelte:fragment>
 	<svelte:fragment slot="trail">
-		{#each items as i}
-			<li>
-				<button type="button" class="btn variant-filled">
-					<a href={i.route} class:active={routeId == i.route} data-sveltekit-preload-data="hover"
-						>{i.title}</a
-					>
-				</button>
-			</li>
-		{/each}
+		<LightSwitch />
+		<ul class="flex list-none items-center space-x-6">
+			{#each items as i}
+				<li>
+					<button type="button" class="variant-filled btn">
+						<a href={i.route} class:active={routeId == i.route} data-sveltekit-preload-data="hover">
+							{i.title}
+						</a>
+					</button>
+				</li>
+			{/each}
+		</ul>
 		<Avatar
 			border="border-4 border-surface-300-600-token hover:!border-primary-500"
 			cursor="cursor-pointer"
@@ -53,11 +61,6 @@
 </AppBar>
 
 <style>
-	a {
-		text-decoration: none;
-		color: white;
-	}
-
 	.active {
 		color: red;
 	}

@@ -4,7 +4,7 @@
 	import useRoutes from '../../hooks/routes';
 
 	const routes = useRoutes();
-	const url = routes.getURL('LOGIN_URL');
+	const url = routes.URLs.LOGIN_URL();
 	const handleSubmit = async (e: SubmitEvent) => {
 		e.preventDefault();
 		const formData = new FormData(e.target as HTMLFormElement);
@@ -25,7 +25,7 @@
 	};
 </script>
 
-<section class="bg-gray-50 dark:bg-gray-900">
+<section class="">
 	<div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
 		<a href="/" class="mb-6 flex items-center text-2xl font-semibold text-gray-900 dark:text-white">
 			<Login />
@@ -96,9 +96,19 @@
 					</div>
 					<button
 						type="submit"
-						class="w-full rounded-lg bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-						>Sign in</button
+						class="text-on-primary w-full rounded-full border-4 border-solid border-primary-500 bg-primary-500 px-5 py-2.5
+           text-center text-sm font-medium
+           hover:border-primary-600 hover:bg-primary-600
+           focus:outline-none focus:ring-4 focus:ring-primary-300
+           active:border-primary-700 active:bg-primary-700
+           disabled:cursor-not-allowed disabled:opacity-50
+           dark:border-primary-400 dark:bg-primary-400
+           dark:hover:border-primary-500 dark:hover:bg-primary-500
+           dark:focus:ring-primary-700"
 					>
+						Sign in
+					</button>
+
 					<p class="text-sm font-light text-gray-500 dark:text-gray-400">
 						Don’t have an account yet? <a
 							href="/signup"

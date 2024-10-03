@@ -86,7 +86,7 @@
 	];
 </script>
 
-<footer class="w-full">
+<footer class="mt-2 w-full border-t">
 	<div class="mx-auto w-full">
 		<div class="grid grid-cols-3 gap-4 px-4 py-6 md:grid-cols-3 lg:py-8">
 			<div>
@@ -122,8 +122,8 @@
 				</ul>
 			</div>
 		</div>
-		<div class="bg-gray-100 px-4 py-6 md:flex md:items-center md:justify-between dark:bg-gray-700">
-			<span class="text-sm text-gray-500 sm:text-center dark:text-gray-300"
+		<div class="bg-gray-100 px-4 py-6 dark:bg-gray-700 md:flex md:items-center md:justify-between">
+			<span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center"
 				>© 2024. All Rights Reserved.
 			</span>
 			<div class="mt-4 flex space-x-5 sm:justify-center md:mt-0 rtl:space-x-reverse">

@@ -1,6 +1,10 @@
 <script lang="ts">
 	import Login from 'svelte-material-icons/Login.svelte';
 	import axiosInstance from '../../services/axios';
+	import useRoutes from '../../hooks/routes';
+
+	const routes = useRoutes();
+	const url = routes.URLs.SIGNUP_URL();
 
 	const handleSubmit = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -13,7 +17,7 @@
 				isAccepted: formData.get('userAcceptance')
 			};
 			console.log(data);
-			const response = await axiosInstance.post(`${import.meta.env.VITE_API_URL}signup`, data);
+			const response = await axiosInstance.post(url, data);
 			window.alert('Signup successfully');
 		} catch {
 			console.error('Error');
