@@ -4,17 +4,21 @@ import { dehydrate } from '@tanstack/query-core';
 import axiosInstance from '../services/axios';
 import useRoutes from '../hooks/routes';
 import type Video from '../types/video.type';
+import { searchQuery } from '../stores/videoSearchQuery';
 
 export const load: PageServerLoad = async () => {
 	const queryKey = ['videos', 5];
 
+	searchQuery.update(() => '');
+
 	const getVideoData = async () => {
 		const routes = useRoutes();
-		const url = routes.URLs.VIDEO_URL();
+		const url = routes.URLs.VIDEO_URL({});
+
 		const response = await axiosInstance.get(url);
 
 		if (response.status === 200) {
-			return response.data;
+			return response.data as Video[];
 		} else {
 			throw new Error(`Error: ${response.statusText}`);
 		}

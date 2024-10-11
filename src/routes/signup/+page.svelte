@@ -55,7 +55,7 @@
 							type="email"
 							name="email"
 							id="email"
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+							class="focus:border-primary-600 focus:ring-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 							placeholder="name@company.com"
 							required={true}
 						/>
@@ -70,7 +70,7 @@
 							name="password"
 							id="password"
 							placeholder="••••••••"
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+							class="focus:border-primary-600 focus:ring-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 							required={true}
 						/>
 					</div>
@@ -85,7 +85,7 @@
 							name="confirmPassword"
 							id="confirmPassword"
 							placeholder="••••••••"
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+							class="focus:border-primary-600 focus:ring-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 							required={true}
 						/>
 					</div>
@@ -97,28 +97,22 @@
 									name="userAcceptance"
 									aria-describedby="userAcceptance"
 									type="checkbox"
-									class="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+									class="focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 h-4 w-4 rounded border border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
 									required={true}
 								/>
 							</div>
 							<div class="ml-3 text-sm">
-								<label for="userAcceptance" class="text-gray-500 dark:text-gray-300"
-									>I accept the Terms and Conditions</label
-								>
+								<label for="userAcceptance" class="">I accept the Terms and Conditions</label>
 							</div>
 						</div>
 					</div>
-					<button
-						type="submit"
-						class="w-full rounded-lg bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-						>Sign up</button
-					>
-					<div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-						Already have an account? <a
-							href="/login"
-							class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-							>Login here</a
-						>
+					<div class="flex justify-center">
+						<button type="submit" class="variant-filled btn">Sign up</button>
+					</div>
+
+					<div class="text-sm font-medium">
+						Already have an account?
+						<a href="/login" class="font-medium underline hover:text-lg">Login here </a>
 					</div>
 				</form>
 			</div>

@@ -13,10 +13,10 @@ function useRoutes() {
 	const URLs = {
 		LOGIN_URL: () => `${baseUrl}/login`,
 		SIGNUP_URL: () => `${baseUrl}/signup`,
-		VIDEO_URL: () => `${baseUrl}/videos`,
+		VIDEO_URL: (params: { limit?: number; offset?: number }) =>
+			`${baseUrl}/videos${buildQueryString(params)}`,
 		videoDetailUrl: (id: string) => `${baseUrl}/videos/${encodeURIComponent(id)}`,
-		searchVideosUrl: (params: { query: string; page?: number }) =>
-			`${baseUrl}/videos/search${buildQueryString(params)}`,
+		searchVideosUrl: (params: { title?: string }) => `${baseUrl}/videos${buildQueryString(params)}`,
 		userProfileUrl: (userId: string) => `${baseUrl}/users/${encodeURIComponent(userId)}`
 		// Add more routes as needed
 	};

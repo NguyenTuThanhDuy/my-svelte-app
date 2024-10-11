@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { formatDuration } from '../utils/formatDuration';
-	import { formatTimeAgo } from '../utils/formatTimeAgo';
+	import { formatDuration } from '$utils/formatDuration';
+	import { formatTimeAgo } from '$utils/formatTimeAgo';
 
 	export let id;
 	export let title;
@@ -46,7 +46,7 @@
 				: 'rounded-xl'}"
 			alt="videoImg"
 		/>
-		<div class="bg-secondary-dark text-secondary absolute bottom-1 right-1 rounded px-0.5 text-sm">
+		<div class="absolute bottom-1 right-1 rounded bg-secondary-dark px-0.5 text-sm text-secondary">
 			{formatDuration(duration)}
 		</div>
 		<video
@@ -67,10 +67,10 @@
 			<a href={`/watch?v=${id}`} class="font-bold">
 				{title}
 			</a>
-			<a href={`/@${channel.id}`} class="text-secondary-text text-sm">
+			<a href={`/@${channel.id}`} class="text-sm text-secondary-text">
 				{channel.name}
 			</a>
-			<div class="text-secondary-text text-sm">
+			<div class="text-sm text-secondary-text">
 				{VIEW_FORMATTER.format(views)} Views • {formatTimeAgo(postedAt)}
 			</div>
 		</div>

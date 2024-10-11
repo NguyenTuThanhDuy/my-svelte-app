@@ -1,7 +1,24 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import Login from 'svelte-material-icons/Login.svelte';
+
 	import axiosInstance from '../../services/axios';
 	import useRoutes from '../../hooks/routes';
+	import { userInfo } from '../../stores/userInfoStore';
+	import { AxiosError } from 'axios';
+	import type { UserInfo } from '../../types/user.type';
+
+	onMount(() => {
+		let user = sessionStorage.getItem('user');
+		if (user) {
+			const userObject = JSON.parse(user) as UserInfo;
+			if (Object.values(userObject).every((value) => value !== undefined || value !== null)) {
+				goto('/', { replaceState: true });
+			}
+		}
+	});
 
 	const routes = useRoutes();
 	const url = routes.URLs.LOGIN_URL();
@@ -9,18 +26,22 @@
 		e.preventDefault();
 		const formData = new FormData(e.target as HTMLFormElement);
 		try {
-			const response = await axiosInstance.post(url, {
+			let data = {
 				username: formData.get('email'),
 				password: formData.get('password')
-			});
-			if (response.status === 200) {
-				window.location.href = '/';
+			};
+			const response = await axiosInstance.post(url, data);
+			userInfo.update(() => response.data);
+			goto('/', { replaceState: true });
+		} catch (error: unknown) {
+			// Ensure the error is an AxiosError type
+			if (error && (error as AxiosError).isAxiosError) {
+				const axiosError = error as AxiosError;
+				console.error('Error Code: ', axiosError.status);
+				console.error('Axios Error: ', axiosError.message);
 			} else {
-				window.location.href = '/login';
+				console.error('Unknown Error: ', error);
 			}
-		} catch {
-			console.error('Error');
-			window.alert('Failed to login');
 		}
 	};
 </script>
@@ -54,7 +75,7 @@
 							type="email"
 							name="email"
 							id="email"
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+							class="focus:border-primary-600 focus:ring-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 							placeholder="name@company.com"
 							required={true}
 						/>
@@ -69,7 +90,7 @@
 							name="password"
 							id="password"
 							placeholder="••••••••"
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+							class="focus:border-primary-600 focus:ring-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 							required={true}
 						/>
 					</div>
@@ -80,7 +101,7 @@
 									id="remember"
 									aria-describedby="remember"
 									type="checkbox"
-									class="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+									class="focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 h-4 w-4 rounded border border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
 									required={false}
 								/>
 							</div>
@@ -88,31 +109,17 @@
 								<label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
 							</div>
 						</div>
-						<a
-							href="/forget"
-							class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+						<a href="/forget" class="text-sm font-medium underline hover:text-lg"
 							>Forgot password?</a
 						>
 					</div>
-					<button
-						type="submit"
-						class="text-on-primary w-full rounded-full border-4 border-solid border-primary-500 bg-primary-500 px-5 py-2.5
-           text-center text-sm font-medium
-           hover:border-primary-600 hover:bg-primary-600
-           focus:outline-none focus:ring-4 focus:ring-primary-300
-           active:border-primary-700 active:bg-primary-700
-           disabled:cursor-not-allowed disabled:opacity-50
-           dark:border-primary-400 dark:bg-primary-400
-           dark:hover:border-primary-500 dark:hover:bg-primary-500
-           dark:focus:ring-primary-700"
-					>
-						Sign in
-					</button>
+					<div class="flex justify-center">
+						<button type="submit" class="variant-filled btn">Sign in </button>
+					</div>
 
-					<p class="text-sm font-light text-gray-500 dark:text-gray-400">
-						Don’t have an account yet? <a
-							href="/signup"
-							class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a
+					<p class="text-sm font-light">
+						Don’t have an account yet? <a href="/signup" class="font-medium underline hover:text-lg"
+							>Sign up</a
 						>
 					</p>
 				</form>
